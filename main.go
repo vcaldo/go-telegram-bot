@@ -38,11 +38,13 @@ func main() {
 		// Extract the command from the Message.
 		switch update.Message.Command() {
 		case "help":
-			msg.Text = "I understand /sayhi and /status."
+			msg.Text = "I understand /sayhi, /status and /torrent"
 		case "sayhi":
 			msg.Text = "Hi :)"
 		case "status":
 			msg.Text = "I'm ok."
+		case "torrent":
+			msg.Text = "get torrents"
 		default:
 			msg.Text = "I don't know that command"
 		}
@@ -51,14 +53,5 @@ func main() {
 			log.Panic(err)
 		}
 	}
-	// for update := range updates {
-	// 	if update.Message != nil { // If we got a message
-	// 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-	// 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-	// 		msg.ReplyToMessageID = update.Message.MessageID
-
-	// 		bot.Send(msg)
-	// 	}
-	// }
 }

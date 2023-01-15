@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	qb "github.com/vcaldo/go-telegram-bot/qbitorrent"
@@ -43,10 +44,15 @@ func main() {
 		case "sayhi":
 			msg.Text = "Hi :)"
 		case "status":
-			msg.Text = "I'm ok."
+			msg.Text = "I'm ok. " + strings.Split(update.Message.Text, " ")[1]
 		case "torrent":
-			a := qb.Auth()
+			a := qb.GetTorrents()
+			// a := qb.Auth()
 			msg.Text = string(a)
+		case "add":
+			torrentUrl := strings.Split(update.Message.Text, " ")[1]
+			qb.AddTorrent(torrentUrl)
+
 		default:
 			msg.Text = "I don't know that command"
 		}

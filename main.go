@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -46,9 +45,8 @@ func main() {
 		case "status":
 			msg.Text = "I'm ok."
 		case "torrent":
-			msg.Text = "get torrents"
 			a := qb.Auth()
-			fmt.Println(a)
+			msg.Text = string(a)
 		default:
 			msg.Text = "I don't know that command"
 		}

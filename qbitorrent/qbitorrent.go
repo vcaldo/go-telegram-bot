@@ -1,36 +1,60 @@
 package qbitorrent
 
 import (
+	"bytes"
 	"fmt"
-	"io"
-	"log"
+	"io/ioutil"
+	"mime/multipart"
 	"net/http"
-	"time"
+	"os"
 )
 
 func Auth() string {
-	client := http.Client{Timeout: 5 * time.Second}
+	host := os.Getenv("QB_HOST")
+	url := host + "/api/v2/auth/login"
+	method := "POST"
 
-	req, err := http.NewRequest(http.MethodGet, "https://192.168.1.145:8080/api/v2/auth/login", http.NoBody)
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+	_ = writer.WriteField("username", os.Getenv("QB_USER"))
+	_ = writer.WriteField("password", os.Getenv("QB_PASS"))
+	err := writer.Close()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		return err.Error()
 	}
 
-	req.SetBasicAuth("admin", "adminadmin")
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, payload)
+	if err != nil {
+		fmt.Println(err)
+		return err.Error()
+	}
 
+	req.Header.Add("Referer", host)
+	req.Header.Set("Content-Type", writer.FormDataContentType())
 	res, err := client.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		return err.Error()
 	}
 
+	// Implement sid error check
+	sid := ""
+	for _, cookie := range res.Cookies() {
+		if cookie.Name == "SID" {
+			sid = cookie.Value
+		}
+	}
+
+	fmt.Println(sid)
 	defer res.Body.Close()
-
-	resBody, err := io.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		return err.Error()
 	}
 
-	fmt.Printf("Status: %d\n", res.StatusCode)
-	fmt.Printf("Body: %s\n", string(resBody))
-	return string(resBody)
+	fmt.Println(string(body))
+	return sid
+
 }

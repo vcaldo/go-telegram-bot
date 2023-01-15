@@ -12,7 +12,7 @@ import (
 	"github.com/newrelic/go-agent/_integrations/nrlogrus"
 )
 
-func main() {
+func auth() {
 	// NOTE: Uncomment after configuring `NEW_RELIC_APP_NAME` and `NEW_RELIC_LICENSE_KEY`
 	newrelicApp, err := StartNewRelicAgent()
 	if err != nil {
@@ -61,6 +61,7 @@ func main() {
 			msg.Text = "I'm ok."
 		case "torrent":
 			msg.Text = "get torrents"
+			auth()
 		default:
 			msg.Text = "I don't know that command"
 		}

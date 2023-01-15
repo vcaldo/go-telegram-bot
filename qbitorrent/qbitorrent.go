@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func auth() string {
+func Auth() string {
 	client := http.Client{Timeout: 5 * time.Second}
 
 	req, err := http.NewRequest(http.MethodGet, "https://192.168.1.145:8080/api/v2/auth/login", http.NoBody)

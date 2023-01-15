@@ -6,6 +6,7 @@ import (
 	"os"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	qb "github.com/vcaldo/go-telegram-bot/qbitorrent"
 )
 
 func main() {
@@ -46,7 +47,7 @@ func main() {
 			msg.Text = "I'm ok."
 		case "torrent":
 			msg.Text = "get torrents"
-			a := qb.auth()
+			a := qb.Auth()
 			fmt.Println(a)
 		default:
 			msg.Text = "I don't know that command"

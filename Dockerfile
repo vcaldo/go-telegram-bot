@@ -2,11 +2,12 @@ FROM golang:1.19-alpine
 
 WORKDIR /app
 
-COPY cmd/go-telegram-bot/go.mod ./
-COPY cmd/go-telegram-bot/go.sum ./
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
 
-COPY cmd/go-telegram-bot/*.go ./
+COPY *.go ./
+COPY qbitorrent qbitorrent
 RUN go build -o /bot
 
 CMD [ "/bot" ]

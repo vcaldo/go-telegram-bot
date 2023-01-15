@@ -47,12 +47,7 @@ func main() {
 			msg.Text = "I'm ok. " + strings.Split(update.Message.Text, " ")[1]
 		case "torrent":
 			a := qb.GetTorrents()
-			// a := qb.Auth()
 			msg.Text = string(a)
-		case "add":
-			torrentUrl := strings.Split(update.Message.Text, " ")[1]
-			qb.AddTorrent(torrentUrl)
-
 		default:
 			msg.Text = "I don't know that command"
 		}

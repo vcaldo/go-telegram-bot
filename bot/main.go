@@ -6,13 +6,12 @@ import (
 	"os"
 	"time"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	qbitorrent "bot/commands/qbitorrent"
 
-	newrelic "github.com/newrelic/go-agent"
-	"github.com/newrelic/go-agent/_integrations/nrlogrus"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-func auth() {
+func main() {
 	// NOTE: Uncomment after configuring `NEW_RELIC_APP_NAME` and `NEW_RELIC_LICENSE_KEY`
 	newrelicApp, err := StartNewRelicAgent()
 	if err != nil {
@@ -61,7 +60,7 @@ func auth() {
 			msg.Text = "I'm ok."
 		case "torrent":
 			msg.Text = "get torrents"
-			auth()
+			qbitorrent.auth()
 		default:
 			msg.Text = "I don't know that command"
 		}

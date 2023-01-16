@@ -7,7 +7,7 @@ COPY go.sum ./
 RUN go mod download
 
 COPY *.go ./
-COPY qbitorrent qbitorrent
+COPY qbitorrent qbitorrent/
 RUN go build -o /bot
 
 CMD [ "/bot" ]
